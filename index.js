@@ -1,16 +1,6 @@
 const express = require('express');
 const app = express();
 
-// hs008 use mongoDB
-const mongoose = require('mongoose');
-const PostsM = require('./toDoModel.js').PostsM;
-const DB_URI = 'mongodb://mongo:27017/toDoApp';
-
-mongoose.connect(DB_URI).then(() => {
-    console.log("connected to mongo db");
-});
-
-
 // 001hs
 const bodyParser = require('body-parser');
 const {randomBytes} = require('crypto');
@@ -41,15 +31,11 @@ app.use(function (req, res, next) {
 });
 // 002hs
 const axios = require('axios');
-const { resolveAny } = require('dns');
 app.get('/posts', (req,res)=>{
   // 001hs - when a get request is received send all data / post back to client
-  //res.send(posts);
-  PostsM.find()
-      .then((postsData) => res.status(200).send(postsData))
-      .catch((err) => res.status(400).send(err));
-
+  res.send(posts);
 });
+
 
 
 // hs002  new for event bus implementation (async)
@@ -62,7 +48,7 @@ app.post('/posts',  async(req, res) =>{
     posts[id] = {
         id, title 
     };
-    
+
     // hs002 new for event bus implementation
     await axios.post('http://docker-compose_dhbw-exercise1-nodejs-eventbus_1:4005/events', {
         type: 'PostCreated',
@@ -71,29 +57,10 @@ app.post('/posts',  async(req, res) =>{
             title
         } 
     });
-    const postsM = new PostsM({
-        id: id,
-        title: title,
-    });
-    postsM.save(function(err, postM) {
-        if(err) {
-            console.log(err);
-            return res.status(500).send(); 
-        }     
-    });
 
     // 001 return status 201 to client and the data itself
     res.status(201).send(posts[id]);
 });
-// hs008
-app.get('/postsdata', (req, res) => {
-    PostsM.find()
-      .then((postsData) => res.status(200).send(postsData))
-      .catch((err) => res.status(400).send(err));
-
-      
-});
-
 
 // hs002 new for event bus implementation
 app.post('/events', (req, res) => {
