@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"posts:latest","namespace":"dhbw-exercise-1"},"fieldPath":"spec.template.spec.containers[?(@.name==\"posts\")].image","pause":"false"}]'
+    app.openshift.io/connects-to: '[{"apiVersion":"apps/v1","kind":"Deployment","name":"event-bus"}]'
   labels:
     app: posts
     app.kubernetes.io/component: posts
