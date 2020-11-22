@@ -9,6 +9,7 @@ metadata:
     app.kubernetes.io/component: posts
     app.kubernetes.io/instance: posts
     app.kubernetes.io/part-of: dhbw-exercise-1
+    app.openshift.io/runtime: nodejs
   name: posts
 spec:
   progressDeadlineSeconds: 600
