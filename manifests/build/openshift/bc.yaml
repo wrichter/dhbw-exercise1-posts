@@ -1,0 +1,51 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: posts
+    app.kubernetes.io/component: posts
+    app.kubernetes.io/instance: posts
+    app.kubernetes.io/part-of: dhbw-exercise-1
+  name: posts
+spec:
+  source:
+    contextDir: /
+    git:
+      uri: https://github.com/wrichter/dhbw-exercise1-posts
+      ref: main
+    type: Git
+  strategy:
+    type: Docker
+    dockerStrategy: {}
+    # type: Source
+    # sourceStrategy:
+    #   from:
+    #     kind: ImageStreamTag
+    #     name: nodejs:12
+    #     namespace: openshift
+  output:
+    to:
+      kind: DockerImage
+      name: replace/me/posts:latest
+    pushSecret:
+      name: external-registry-dockercfg
+      # kind: ImageStreamTag
+      # name: posts:latest
+  failedBuildsHistoryLimit: 5
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  successfulBuildsHistoryLimit: 5
+  triggers:
+  - type: Generic
+    generic:
+      secretReference:
+        name: posts-generic-webhook-secret
+  - type: GitHub
+    github:
+      secretReference:
+        name: posts-github-webhook-secret  
+  # - type: ImageChange
+  #   imageChange:
+  #     lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:87be8d1bf03ef6cf2d050ff86ea1798a6a40f0bf238d1d8b7eadb5f45530de36
+  - type: ConfigChange

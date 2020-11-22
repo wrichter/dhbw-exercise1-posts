@@ -1,0 +1,21 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: posts
+    app.kubernetes.io/component: posts
+    app.kubernetes.io/instance: posts
+    app.kubernetes.io/part-of: dhbw-exercise-1
+  name: posts
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+  - from:
+      kind: DockerImage
+      name: replace/me/posts:latest
+    importPolicy:
+      scheduled: true
+    name: latest
+    referencePolicy:
+      type: Source

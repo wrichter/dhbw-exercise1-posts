@@ -1,0 +1,13 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: posts
+spec:
+  path: /
+  to:
+    kind: Service
+    name: posts
+    weight: 100
+  port:
+    targetPort: 4000-tcp
+  wildcardPolicy: None
