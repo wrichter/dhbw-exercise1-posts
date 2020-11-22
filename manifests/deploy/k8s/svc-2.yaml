@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: posts
+    app.kubernetes.io/component: posts
+    app.kubernetes.io/instance: posts
+    app.kubernetes.io/part-of: dhbw-exercise-1
+  name: docker-compose_dhbw-exercise1-nodejs-posts_1
+spec:
+  ports:
+  - name: 4000-tcp
+    port: 4000
+    protocol: TCP
+    targetPort: 4000
+  selector:
+    app: posts
+    deploymentconfig: posts
+  sessionAffinity: None
+  type: ClusterIP
