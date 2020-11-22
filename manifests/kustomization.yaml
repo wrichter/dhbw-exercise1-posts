@@ -6,3 +6,4 @@ bases:
 images:
 - name: replace/me/posts
   newName: quay.io/wrichter/dhbw-exercise-1-posts
+  newTag: main
