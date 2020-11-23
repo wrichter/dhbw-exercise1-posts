@@ -1,9 +1,9 @@
 bases:
-#- build/openshift
+- build/openshift
 - deploy/k8s
 - deploy/openshift
 
 images:
 - name: replace/me/posts
-  newName: quay.io/wrichter/dhbw-exercise-1-posts
-  newTag: main
+  newName: image-registry.openshift-image-registry.svc:5000/dhbw-exercise-1/posts
+  newTag: latest

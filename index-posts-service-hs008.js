@@ -67,7 +67,7 @@ app.post('/posts',  async(req, res) =>{
     };
     
     // hs002 new for event bus implementation
-    await axios.post('http://docker-compose_dhbw-exercise1-nodejs-eventbus_1:4005/events', {
+    await axios.post('http://event-bus:4005/events', {
         type: 'PostCreated',
         data: { 
             id,
